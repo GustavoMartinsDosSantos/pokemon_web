@@ -50,6 +50,34 @@ async function loadAllSprites(){
             }
             resourceStatus.animationSprites = "ok"
         })
+            ///DEBUG
+           //Loading cop static default tiles
+    copSpritesUrl = [
+        'src/sprites/npc/cop_S_0.0.png',
+        'src/sprites/npc/cop_S_0.1.png',
+        'src/sprites/npc/cop_S_0.2.png',
+        'src/sprites/npc/cop_S_0.3.png',
+        'src/sprites/npc/cop_W_0.0.png',
+        'src/sprites/npc/cop_W_0.1.png',
+        'src/sprites/npc/cop_W_0.2.png',
+        'src/sprites/npc/cop_W_0.3.png',
+        'src/sprites/npc/cop_A_0.0.png',
+        'src/sprites/npc/cop_A_0.1.png',
+        'src/sprites/npc/cop_A_0.2.png',
+        'src/sprites/npc/cop_A_0.3.png',
+        'src/sprites/npc/cop_D_0.0.png',
+        'src/sprites/npc/cop_D_0.1.png',
+        'src/sprites/npc/cop_D_0.2.png',
+        'src/sprites/npc/cop_D_0.3.png'
+    ]
+    copSprites = {"W":[], "S":[], "A":[], "D":[]}
+    await loadSprites(copSpritesUrl)
+        .then(response => {
+           for (let i = 0; i < copSpritesUrl.length; i++) {    
+               const copDirectionsIndex = copSpritesUrl[i].split("_")[1]
+               copSprites[copDirectionsIndex].push(response[i])
+            }
+        })
 
 
     //Loading player static default tiles
@@ -80,7 +108,7 @@ async function loadAllSprites(){
             }
             resourceStatus.playerSprites = "ok"
         })
-}   
+}
 
 loadAllSprites()
 
@@ -106,6 +134,13 @@ function drawMap(mapArray, overrideAnimationTiles = true){
                     }
                 }
             }
+            for (const otherPlayer of activePlayers) {
+                if (otherPlayer.id !== player.id)
+                    context.drawImage(copSprites[otherPlayer.direction][otherPlayer.animationState%4], otherPlayer.position.x, otherPlayer.position.y, 45, 60)
+            }
+            player.walking && pressedMovementButtons.length > 0
+                ? context.drawImage(playerSprites[player.direction][playerAnimationState%4], player.position.x, player.position.y, 45, 60)
+                : context.drawImage(playerSprites[player.direction][0], player.position.x, player.position.y, 45, 60)
         }
     }
 }

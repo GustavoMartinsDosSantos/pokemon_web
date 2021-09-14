@@ -6,7 +6,7 @@ let player = {
         y: 300
     },
     id: null,
-    animationState: playerAnimationState
+    animationState: null
 }
 
 if(localStorage.position){
@@ -65,7 +65,7 @@ playerAnimationInterval = setInterval(() => {
 function moveChar(direction){
     if(player.walking)
         stopChar(false)
-
+    
     let incrementedPosition = {x:0, y:0}
     if(direction === "W")
         incrementedPosition.y = -0.7
@@ -87,7 +87,10 @@ function moveChar(direction){
             player.position.x = newX
             player.position.y = newY
         }
-        socket.emit("player_movement", player)
+        socket.emit("player_movement", {
+            ...player,
+            animationState: playerAnimationState
+        })
         context.drawImage(playerSprites[player.direction][playerAnimationState%4], newX, newY, 45, 60)
     }, 5)
 }
@@ -96,6 +99,5 @@ function stopChar(drawFirstAnimation = true){
     clearInterval(playerUpdateImageInterval)
     if(drawFirstAnimation){
         drawMap(mapArray, false)
-        context.drawImage(playerSprites[player.direction][0], player.position.x, player.position.y, 45, 60)
     }
 }

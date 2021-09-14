@@ -5,23 +5,27 @@ const socket = io("http://localhost:3000")
 
 socket.on('player_id', data => {
     player.id = data
-    console.log(data)
+    socket.emit("player_init", player) 
 });
 
 socket.on("update_player_position", data => {
-    context.drawImage(playerSprites["S"][0], data.x, data.y, 45, 60)
+    for (let i = 0; i < activePlayers.length; i++) {
+        if(activePlayers[i].id === data.id)
+                activePlayers[i] = data
+    }
+    drawMap(mapArray, false)
 })
 
 socket.on("active_players", data => {
     activePlayers = data
-    socket.emit("player_init", {...player.position})
-
+    console.log(activePlayers)
     const drawPlayersCheckInterval = setInterval(() => {
         if(resourceStatus.mapSprites === "ok" && resourceStatus.playerSprites === "ok"
             &&resourceStatus.animationSprites === "ok"){
             clearInterval(drawPlayersCheckInterval)
-            for (const player of activePlayers) {
-                context.drawImage(playerSprites["S"][0], player.x, player.y, 45, 60)
+            for (const otherPlayer of activePlayers) {
+                if (otherPlayer.id !== player.id)
+                    context.drawImage(copSprites["S"][0], otherPlayer.position.x, otherPlayer.position.y, 45, 60)
             }
         }
     }, 100);

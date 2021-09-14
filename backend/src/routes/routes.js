@@ -28,30 +28,30 @@ const io = require('socket.io')(server,  {
 
 let activePlayers = []
 io.on('connection', function(socket){
+  io.emit("active_players", activePlayers)
+  
+  socket.emit("player_id", socket.id)
   
   socket.on("player_init", data => {
-    console.log(data)
-    activePlayers.push({
-      x: data.x,
-      y: data.y,
-      id: socket.id
-    })
+    activePlayers.push(data)
+    console.log(activePlayers)
+    io.emit("active_players", activePlayers)
   })
 
-  socket.emit("player_id", socket.id)
-  io.emit("active_players", activePlayers)
   console.log(`User connected. His ID is ${socket.id}`);
   
   socket.on("player_movement", (data) => {
     socket.broadcast.emit("update_player_position", data)
-  })
+  }) 
 
   socket.on('disconnect', function(){
     activePlayers = activePlayers.filter(element => {
-      if(element.id = socket.id)
+      if(element.id === socket.id)
         return false
       return true
     })
+    io.emit("active_players", activePlayers)
     console.log(`The user with ID ${socket.id} has disconnected`);
   });
+  console.log(`Players: ${activePlayers}`)
 });
