@@ -25,11 +25,13 @@ context.imageSmoothingEnabled = false
 
 let resourcesCheckInterval = setInterval(() => {
     if(resourceStatus.mapSprites === "ok" && resourceStatus.playerSprites === "ok"
-        &&resourceStatus.animationSprites === "ok"){
+        &&resourceStatus.animationSprites === "ok" && player.name !== ""){
             drawMap(mapArray)
             startMapAnimations()
             context.drawImage(playerSprites["S"][0], player.position.x, player.position.y, 45, 60)
             clearInterval(resourcesCheckInterval)
+            startScreenDrawer()
+            activePlayers.push(player)
     }
 }, 0);
 let animatedTilesIndex = [2]
@@ -46,10 +48,6 @@ function startMapAnimations(){
                 mapArray[i * mapSize + j] >= 2 && mapArray[i * mapSize + j] < 3
                 ? context.drawImage(environmentTiles[2][mapTilesAnimationState%4], j * 45, i * 45, 45, 45)
                 : null
-
-                player.walking
-                ? context.drawImage(playerSprites[player.direction][playerAnimationState%4], player.position.x, player.position.y, 45, 60)
-                : context.drawImage(playerSprites[player.direction][0], player.position.x, player.position.y, 45, 60)
             }
         }
     }, 300)

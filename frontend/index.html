@@ -1,116 +1,56 @@
 <html>
-  <head>
-    <style>
-      
-      body{
-        font-family: 'DotGothic16', sans-serif;
-      }
 
-      #wrapper-container{
-        display: inline-flex;
-        overflow: hidden;
-        width:495px;
-        position: relative;
-      }
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin:0px;
+      padding:0px;
+      font-family: 'DotGothic16', sans-serif;
+      display: inline-flex;
+      width: 100%;
+      height: 100%;
+    }
 
-      #menu{
-        position: absolute;
-        left: 495px;
-        width: 150px;
-        transition: all 1s;
-        background-color: #ff4949;
-        padding-bottom: 50px;
-        border: solid 3px #FFFFFF;
-      }
+    #wrapper-container {
+      width: 100%;
+      height: 100%;
+      display: inline-flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-      .menu-title{
-        background-color: #FFFFFF;
-        color:rgb(255, 73, 73);
-        font-size: 34px;
-        text-align: left;
-        cursor: pointer;
-        width: 100%;
-        border: solid 3px #FFFFFF;
-        border-right: 0px;
-      }
-
-      .menu-close{
-        background-color: rgb(255, 73, 73);
-        color: #FFFFFF;
-        border-radius: 5px;
-        border: solid 2px #00000000;
-      }
-
-      .menu-close:hover{
-        background-color: #FFFFFF;
-        color: rgb(255, 73, 73);
-        border: solid 2px rgb(255, 73, 73);
-        border-radius: 5px;
-      }
-
-      .menu-item{
-        font-size: 36px;
-        line-height: 45px;
-        padding: 0px;
-        background-color: rgb(255, 73, 73);
-        cursor: pointer;
-        text-align: left;
-        color: #FFFFFF;
-        border: solid 3px #FFFFFF00;
-        border-right: 0px;
-        display: inline-flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        width: 100%;
-      }
-
-      .active::before{
-        height: 0px;
-        width: 5px;
-        border-left: solid 10px #ff4949;
-        border-top: solid 7px #FFFFFF00;
-        border-bottom: solid 7px #FFFFFF00;
-        content: "";
-        margin-left:5px;
-      }
-
-      .active {
-        background-color: #FFFFFF;
-        color:rgb(255, 73, 73);
-      }
-
-    </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    #inputContainer{
+      display: inline-flex;
+      flex-flow: row;
+    }
+  </style>
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet"> 
-    <script src="./src/dist/socket.io.min.js"></script>
-  </head>
-  <body>
-    <div id="wrapper-container">
-    <div id="menu">
-      <div class="menu-title">
-        <span onclick="updateMenuStatus()" class="menu-close">&nbspX&nbsp</span>
-        <span>MENU</span></div>
-      <div menu-item-index="0" class="menu-item active" onclick="this.setThisIndexActive()">
-        PKMN
-      </div>
-      <div menu-item-index="1" class="menu-item" onclick="this.setThisIndexActive()">
-        BAG
-      </div>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">  -->
+  <script src="./src/dist/socket.io.min.js"></script>
+</head>
+
+<body>
+  <div id="wrapper-container">
+    <div id="inputContainer">
+      <label for="playerName">Nome do jogador:</label>
+      <input type="text" name="playerName" oninput="setPlayerName(this.value)"/>
     </div>
-    <canvas onclick="updateMenuStatus()" id="canvas" width="495px" height="495px"></canvas>
-    </div>
-    <script src="src/js/PlayerControls.js"></script>
-    <script src="src/js/ResourcesLoader.js"></script>
-    <script src="src/js/WebSocket.js"></script>
-    <script src="src/js/Configs.js"></script>
-    <script src="src/js/Physics.js"></script>
-    <script src="src/js/GeneralFunctions.js"></script>
-    <script src="src/js/Drawer.js"></script>
-    <script src="src/js/Interface.js"></script>
-    <audio autoplay>
-      <source src="src/music/littleroot-town.mp3" type="audio/mpeg">
-    </audio>
-  </body>
+    <canvas id="canvas" width="495px" height="495px"></canvas>
+  </div>
+  <script src="src/js/PlayerControls.js"></script>
+  <script src="src/js/ResourcesLoader.js"></script>
+  <script src="src/js/WebSocket.js"></script>
+  <script src="src/js/Configs.js"></script>
+  <script src="src/js/Physics.js"></script>
+  <script src="src/js/GeneralFunctions.js"></script>
+  <script src="src/js/Drawer.js"></script>
+  <script src="src/js/Interface.js"></script>
+  <audio autoplay>
+    <source src="src/music/littleroot-town.mp3" type="audio/mpeg">
+  </audio>
+</body>
+
 </html>
