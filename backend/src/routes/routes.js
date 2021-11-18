@@ -2,7 +2,7 @@ const express = require("express");
 const reqWatcher = require("../middlewares/request_watcher");
 const cors = require("cors");
 const app = express();
-const port = env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors({
     origin: 'http://localhost:180'

@@ -1,5 +1,5 @@
 let player = {
-    name:"",
+    name: "",
     direction: "S",
     walking: false,
     position: {
@@ -109,7 +109,7 @@ function stopChar() {
     cancelFrameRequest(requestFrameId)
 }
 
-function setPlayerName(name){
+function setPlayerName(name) {
     player.name = name
     socket.emit("player_movement", {
         ...player,
