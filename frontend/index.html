@@ -3,13 +3,24 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @font-face {
+      font-family: 'pokemon_pixel_font';
+      src: url('src/fonts/Pokemon-Pixel-Font.woff');
+    }
+
     body {
-      margin:0px;
-      padding:0px;
-      font-family: 'DotGothic16', sans-serif;
+      margin: 0px;
+      padding: 0px;
+      font-family: 'pokemon_pixel_font';
       display: inline-flex;
       width: 100%;
       height: 100%;
+      font-size: 36px;
+    }
+
+    input {
+      font-family: 'pokemon_pixel_font';
+      font-size: 36px;
     }
 
     #wrapper-container {
@@ -21,24 +32,123 @@
       justify-content: center;
     }
 
-    #inputContainer{
+    #inputContainer {
       display: inline-flex;
       flex-flow: row;
+      position: absolute;
+      top:20px;
+    }
+
+    #battle-interface{
+      background-color: #000000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 495px;
+    }
+
+    #battle-arena {
+      height: 230px;
+      width: 495;
+      background-image: url('src/sprites/interface/battle_arena_1.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position-y: center;
+      image-rendering: pixelated;
+    }
+
+    #battle-controls {
+      height: 120px;
+      width: 100%;
+      background-color: #484050;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #battle-text {
+      height: 100px;
+      width: 92%;
+      background-color: #68A0A0;
+      border: solid 4px #d04838;
+      border-left-width: 10px;
+      border-right-width: 10px;
+      border-radius: 20px;
+      color: #FFFFFF;
+      position: relative;
+    }
+
+    #battle-text>span {
+      margin-left: 15px;
+      margin-top: 10px;
+      height: 100%;
+      display: inline-block
+    }
+
+    #battle-commands {
+      height: 86px;
+      width: 250px;
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      float: right;
+      border: solid 5px #716982;
+      padding: 12px;
+    }
+
+    .commands-row {
+      height: 50%;
+      display: inline-flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      margin-left: 3px;
+    }
+
+    .commands-row>span{
+      cursor: pointer;
+    }
+
+    #canvas{
+      position: absolute;
+      z-index: -1;
     }
   </style>
   <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">  -->
   <script src="./src/dist/socket.io.min.js"></script>
+  <title>POKEMON</title>
 </head>
 
 <body>
   <div id="wrapper-container">
     <div id="inputContainer">
       <label for="playerName">Nome do jogador:</label>
-      <input type="text" name="playerName" oninput="setPlayerName(this.value)"/>
+      <input type="text" name="playerName" oninput="setPlayerName(this.value)" />
     </div>
     <canvas id="canvas" width="495px" height="495px"></canvas>
+    <div id="battle-interface" style="display: none">
+      <div id="battle-arena">
+        <img id="player-pkmn" style="image-rendering:pixelated;height: 150px;width: 140;margin-top:82px;margin-left:71px"
+          src="src/sprites/pkmns-battle/0_B.png" alt="">
+        <img id="enemy-pkmn" style="image-rendering:pixelated;height: 150px;width: 140;margin-bottom:51px;margin-left:71px"
+          src="src/sprites/pkmns-battle/0_F.png" alt="">
+      </div>
+      <div id="battle-controls">
+        <div id="battle-text">
+          <span>What should<br> STARMIE do?</span>
+        </div>
+        <div id="battle-commands">
+          <div class="commands-row">
+            <span>FIGHT</span><span>BAG</span>
+          </div>
+          <div class="commands-row">
+            <span>POKEMON</span><span>RUN</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="src/js/PlayerControls.js"></script>
   <script src="src/js/ResourcesLoader.js"></script>
@@ -48,6 +158,7 @@
   <script src="src/js/GeneralFunctions.js"></script>
   <script src="src/js/Drawer.js"></script>
   <script src="src/js/Interface.js"></script>
+  <script src="src/js/Battle.js"></script>
   <audio autoplay>
     <source src="src/music/littleroot-town.mp3" type="audio/mpeg">
   </audio>

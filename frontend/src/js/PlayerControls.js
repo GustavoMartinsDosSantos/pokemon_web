@@ -77,6 +77,7 @@ function cancelFrameRequest() {
     cancelAnimationFrame(requestFrameId)
 }
 
+playerActualTileIndex = 0
 function updatePlayerPosition() {
     requestFrameId = undefined
     incrementedPosition = { x: 0, y: 0 }
@@ -102,6 +103,19 @@ function updatePlayerPosition() {
         ...player,
         animationState: playerAnimationState
     })
+
+    if (playerActualTileIndex !== mapArray[getMapIndexByCoordinates(player.position.x + 35, player.position.y + 30).mapIndex])
+        tilesWithEventState[playerActualTileIndex] = 0
+
+    playerActualTileIndex = mapArray[getMapIndexByCoordinates(player.position.x + 35, player.position.y + 30).mapIndex]
+    if (tilesWithEventOnEnter.includes(playerActualTileIndex)) {
+        if (tilesWithEventState[playerActualTileIndex] === 0) {
+            console.log("Pokémon")
+            ShowBattleInterface()
+            tilesWithEventState[playerActualTileIndex] = 1
+        }
+    }
+
     requestFrame()
 }
 
